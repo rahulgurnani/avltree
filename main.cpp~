@@ -19,6 +19,7 @@ int main()
 	cout<<"\ntree after all insertions\n";
 	t.root->printTree();
 	t.remove(35);
+	cout<<"\noutput\n";
 	t.root->printTree();
 	t.remove(49);
 	cout<<"\noutput\n";

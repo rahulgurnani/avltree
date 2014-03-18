@@ -1,3 +1,4 @@
+/* a small main function to demonstrate AVLTree class*/
 #include "Avl.h"
 #include <iostream>
 #include <stdlib.h>
@@ -7,7 +8,7 @@ int main()
 {
 	int v;
 	AVLTree<int> t;
-	for(int i=0;i<1	0;i++)
+	for(int i=0;i<10;i++)
 	{	
 		
 		v=rand()%50;
@@ -19,6 +20,7 @@ int main()
 	cout<<"\ntree after all insertions\n";
 	t.root->printTree();
 	t.remove(35);
+	cout<<"\noutput\n";
 	t.root->printTree();
 	t.remove(49);
 	cout<<"\noutput\n";

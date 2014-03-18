@@ -1,5 +1,6 @@
 #include "Avl.h"
 #include <iostream>
+/*to delete tree*/
 template<typename T>
 void AVLTree<T>::deleteTree()
 {
@@ -11,8 +12,9 @@ void AVLTree<T>::deleteTree()
 	}
 	delete root;
 }
+
 template<typename T>
-void AVLNode<T>::deleteNode()
+void AVLNode<T>::deleteNode()	/*to delete a specific node*/
 {
 	AVLNode <T>*root=this;
 	if(root!=NULL)
@@ -23,7 +25,7 @@ void AVLNode<T>::deleteNode()
 	delete root;
 }
 template<typename T>
-AVLNode<T>* AVLTree<T>::lookup(const T &key)
+AVLNode<T>* AVLTree<T>::lookup(const T &key)	/*to search for a key*/
 {
 	AVLNode <T>*root=this->root;
 	if(this==NULL)
@@ -46,16 +48,16 @@ AVLNode<T>* AVLTree<T>::lookup(const T &key)
 	if(root==NULL)
 		return root;
 }
-int max(int a,int b)
+int max(int a,int b)	/*to find max out of two numbers*/
 {
 	return ((a>b)?a:b);
 }
-int absolute(int a)
+int absolute(int a)	/*to return absolute value*/
 {
 	return ((a>0)?a:(-a));
 }
 template<typename T>
-int new_height(AVLNode<T>* a)
+int new_height(AVLNode<T>* a)	/*returns updated height*/
 {
 	return(1+max(a->right->get_height(),a->left->get_height()));
 }
@@ -65,7 +67,7 @@ int new_height(AVLNode<T>* a)
 
 
 template<typename T>
-AVLNode<T>* AVLTree<T>::insert(const T &key)
+AVLNode<T>* AVLTree<T>::insert(const T &key)	/*to insert a key*/
 {
 	/*	
 		the following variables:
@@ -144,7 +146,6 @@ AVLNode<T>* AVLTree<T>::insert(const T &key)
 template<typename T>
 void AVLNode<T>::rotateL(AVLTree<T>* t)
 {
-	cout<<"left rotation";
 	AVLNode<T> *a,*b,*c;
 	a=this;
 	if(this!=NULL)
@@ -183,7 +184,6 @@ void AVLNode<T>::rotateL(AVLTree<T>* t)
 template<typename T>
 void AVLNode<T>::rotateR(AVLTree<T>* t)
 {
-	cout<<"right rotation";
 	AVLNode<T> *a,*b,*c;
 	a=this;
 	if(this!=NULL)
@@ -223,16 +223,13 @@ void AVLNode<T>::rotateR(AVLTree<T>* t)
 template<typename T>
 void AVLNode<T>::rotateLR(AVLTree<T>* t)
 {
-	cout<<"lr rotation\n";
 	this->left->rotateL(t);
-	this->printTree();
 	this->rotateR(t);
 
 }
 template<typename T>
 void AVLNode<T>::rotateRL(AVLTree<T>* t)
 {
-	cout<<"rl rotation\n";
 	this->right->rotateR(t);
 
 	this->rotateL(t);
@@ -244,7 +241,7 @@ void AVLNode<T>::printTree()
 		return;
 	else
 	{
-		cout<<"\nkey ="<<this->key<<"height= "<<height;
+		cout<<"\nkey ="<<this->key<<" height= "<<height;
 		if(this->left!=NULL)
 			cout<<" left ="<<this->left->key;
 		if(this->right!=NULL)
@@ -309,7 +306,7 @@ void AVLTree<T>::remove(const T& key)
       if (prev == NULL) this->root = root -> right;                           /* Root is deleted */
       else if (key < prev -> key) {
       	prev -> left = root -> right;
-      	while(prev->get_height()!=new_height(prev)||(absolute(prev->left->get_height()-prev->right->get_height())==2))      	
+      	 while(1)
       	{
       		prev->set_height(new_height(prev));	
 		/*if the tree is right heavy then the following code is executed*/
@@ -331,10 +328,9 @@ void AVLTree<T>::remove(const T& key)
       }
       else {
       	prev -> right = root -> right;
-  	while(prev->get_height()!=new_height(prev)||(absolute(prev->left->get_height()-prev->right->get_height())==2))
+  	 while(1)
       	{
       		
-      		cout<<"\n1\n";
       		prev->set_height(new_height(prev));
       		/*if the tree is left heavy then the following code is executed*/
 		if((prev->left->get_height()-prev->right->get_height())==2)
@@ -359,21 +355,20 @@ void AVLTree<T>::remove(const T& key)
 				else
 					prev->rotateRL(this);
 			}
-		cout<<"\nhere\n";
+		
       		
       		prev=prev->parent;
       		if(prev==NULL)
       			break;
       	}
-      	cout<<"\nhreer\n";
       }
    } else if (root -> right == NULL) {
       if (prev == NULL) this->root = root ->left;                           /* Root is deleted */
       else if (key < prev -> key) {
       		prev -> left = root -> left;
-      	      	while(prev->get_height()!=new_height(prev)||(absolute(prev->left->get_height()-prev->right->get_height())==2))
+      	      	 while(1)
 	      	{
-	      	cout<<"\n2\n";
+
 	      		prev->set_height(new_height(prev));
 		/*if the tree is left heavy then the following code is executed*/
 		if((prev->left->get_height()-prev->right->get_height())==2)
@@ -406,9 +401,8 @@ void AVLTree<T>::remove(const T& key)
       else 
       {
       		prev -> right = root -> left;
-		while(prev->get_height()!=new_height(prev)||(absolute(prev->left->get_height()-prev->right->get_height())==2))
+      	      	 while(1)
 	      	{
-	      	cout<<"\n3\n";
 	      		prev->set_height(new_height(prev));
 		/*if the tree is left heavy then the following code is executed*/
 		if((prev->left->get_height()-prev->right->get_height())==2)
@@ -448,9 +442,8 @@ void AVLTree<T>::remove(const T& key)
       AVLNode<T>* root1=root;
       if (prev == q1) {
 	      	prev -> right = root -> right;         /* Delete the immediate successor */
-		 while(prev->get_height()!=new_height(prev)||(absolute(prev->left->get_height()-prev->right->get_height())==2))
+		 while(1)
 	      	{
-	      		cout<<"\n4\n";
 	      		prev->set_height(new_height(prev));
 	      		/*if the tree is left heavy then the following code is executed*/
 			if((prev->left->get_height()-prev->right->get_height())==2)
@@ -481,9 +474,8 @@ void AVLTree<T>::remove(const T& key)
       }
       else {
 	      prev -> left = root -> right;
-	      while(prev->get_height()!=new_height(prev)||(absolute(prev->left->get_height()-prev->right->get_height())==2))
+	      while(1)
 	      {
-	      	cout<<"\n5\n";
 	      	prev->set_height(new_height(prev));
 	      	/*if the tree is left heavy then the following code is executed*/
 		if((prev->left->get_height()-prev->right->get_height())==2)
