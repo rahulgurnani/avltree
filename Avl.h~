@@ -1,0 +1,112 @@
+#ifndef __AVL_H	// Control inclusion of header files
+#define __AVL_H
+#include <iostream>
+using namespace std;
+template<class T>
+class AVLTree;
+template<typename T>
+class AVLNode{
+	public:
+	AVLNode *left,*right,*parent;
+	T key;
+	int height;
+
+	AVLNode()
+	{
+		left=NULL;
+		right=NULL;
+		this->set_parent(NULL);
+		height=0;
+	}
+	AVLNode(T a,AVLNode<T> *p)
+	{
+		key=a;
+		height=0;
+		parent=p;
+		left=NULL;
+		right=NULL;
+	}
+	int get_height()
+	{
+		if(this==NULL)
+			return -1;
+		else
+			return this->height;
+	}
+	void deleteNode();
+	void set_height(const int h)
+	{
+		height=h;
+		cout<<"setting h="<<this->height<<" of "<<this->key;
+	}
+	void operator=(const AVLNode<T>& a)
+	{
+		if(&a==NULL)
+			{
+				return;
+		}
+		this->left=a.left;
+		this->right=a.right;
+		this->height=a.height;
+		this->set_parent(a.parent);
+		this->key=a.key;
+	}
+	T get_key()
+	{
+		return key;
+	}
+	void set_key(T k)
+	{
+		key=k;
+	}
+	AVLNode<T>* get_parent()
+	{
+		return parent;
+	}
+	void set_parent(AVLNode *p)
+	{
+	
+		parent=p;
+	}
+	~AVLNode()
+	{
+		
+		cout<<"destructed";
+	}
+	void rotateL(AVLTree<T>* t);
+	void rotateR(AVLTree<T>* t);
+	void rotateLR(AVLTree<T>* t);
+	void rotateRL(AVLTree<T>* t);
+	void printTree();
+	
+};
+template<typename T>
+class AVLTree{
+public:
+	AVLNode<T> *root;
+
+	AVLTree()
+	{
+		root=NULL;
+	}
+	AVLTree(T a)
+	{
+		root=new AVLNode<T>;
+		root->key=a;
+	}
+	~AVLTree()
+	{
+		deleteTree();
+	}
+	void deleteTree();
+	AVLNode<T> *lookup(const T &key);
+	AVLNode<T> *insert(const T &key);
+	void remove(const T &key);
+	void printAVL();
+	
+};
+
+
+#include "Avl.inl"
+
+#endif 
